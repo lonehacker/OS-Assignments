@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/wait.h>
+#include<sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/sem.h>
+#include <string.h>
+#include <libmsg.h>
+
+#define wait(s) semop(s, &pop, 1)  
+#define signal(s) semop(s, &vop, 1)
+int register(char *pname)
+{
+  int msg_seg,reg_seg,sem_msg,sem_reg;
+  struct arr *msgs;
+  struct reg *regs;
+  int *no_regs;
+  key_t k;
+  k = ftok("/usr/bin",'A');
+  msg_seg = shmget(k,100*sizeof(struct arr),0777|IPC_CREAT);
+  reg_seg = shmget(k,100*sizeof(struct reg),0777|IPC_CREAT);
+  sem_msg = semget(k,1,0777|IPC_CREAT);
+  sem_reg = semget(k,1,0777|IPC_CREAT); 
+  pop.sem_num = vop.sem_num = 0;
+  pop.sem_flg = vop.sem_flg = 0;
+  pop.sem_op = -1 ; vop.sem_op = 1 ;
+  wait(sem_msg);
+  msgs = (struct arr *)shmat(msg_seg,0,0);
+  shmdt(msgs);
+  signal(sem_msg);      
+  wait(sem_reg);
+  regs = (struct reg *)shmat(reg_seg,0,0);
+  no_regs = (int *)shmat(nregs,0,0);
+  shmdt(regs);
+  signal(sem_reg);
+
+}

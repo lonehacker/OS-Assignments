@@ -1,0 +1,3 @@
+anshul    2014  4.2 12.8 975456 262876 ?       Sl   03:13   6:16 /usr/lib/firefox-7.0.1/firefox
+anshul    2075  0.3  0.5 243544 12264 ?        Sl   03:13   0:32 /usr/lib/firefox-7.0.1/plugin-container /var/lib/flashplugin-installer/npwrapper.libflashplayer.so -greomni /usr/lib/firefox-7.0.1/omni.jar 2014 true plugin
+anshul    3652  0.0  0.0  13124  1060 pts/1    S+   05:42   0:00 grep --color=auto firefox

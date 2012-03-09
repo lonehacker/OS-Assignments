@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
+
+
+#define wait(s) semop(s, &pop, 1)
+#define signal(s) semop(s, &vop, 1)
+
+
+int main()
+{
+
+  FILE *fp1,*fp2;
+  int a[1024][768][3];
+  int bright;
+  int m,n,i,j,k;
+
+  char type[10];
+  int size;
+  char in[100];
+  char out[100];
+   struct sembuf pop, vop ;
+  pop.sem_num = vop.sem_num = 0;
+  pop.sem_flg = vop.sem_flg = 0;
+  pop.sem_op = -1 ; vop.sem_op = 1 ;
+
+
+
+  printf("\nEnter the name of input file::");
+  scanf("%s",in);
+  printf("\nEnter the name of the output file::");
+  scanf("%s",out);
+  fp1 = fopen(in,"r");
+  fp2 = fopen(out,"w");
+  printf("\nEnter percentage change in brightness[integer between -100 and 100]::");
+  scanf("%d",&bright);
+ 
+ 
+  fscanf(fp1,"%s",type);
+  fprintf(fp2,"%s\n",type);
+
+  printf("Type::%s\n",type);
+                       
+  fscanf(fp1,"%d",&m);
+  fscanf(fp1,"%d",&n);
+  fprintf(fp2,"%d %d\n",m,n);
+  printf("%d %d",m,n);
+  printf("here");
+  getchar();   
+
+  fscanf(fp1,"%d",&size);
+  printf("%d",size);
+
+   for(i=0;i<m;i++)
+      {
+        for(j=0;j<n;j++)
+          {
+        for(k=0;k<3;k++)
+          {
+           fscanf(fp1,"%d",&a[i][j][k]);
+            printf("\n%d",a[i][j][k]);
+          }
+      }
+      }
+
+   fclose(fp1);
+   fclose(fp2);
+  return 0;
+
+}

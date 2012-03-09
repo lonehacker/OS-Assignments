@@ -1,0 +1,8 @@
+
+
+gcc -Wall -g -c -o libmsg.o libmsg.c
+ar rcs libmsg.a libmsg.o
+gcc -Wall -c msgclient.c -o msgclient.o
+gcc -g -o client msgclient.o -L. -lmsg
+gcc controller.c -o controller
+
